@@ -15,4 +15,8 @@ class FoodTruck
   def stock(item, num_of_stock)
     @inventory[item] = check_stock(item) + num_of_stock
   end
+
+  def inventory_items
+    @inventory.keys
+  end
 end
