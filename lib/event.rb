@@ -47,8 +47,6 @@ class Event
     end
   end
 
-  private
-
   def list_of_items
     @food_trucks.flat_map(&:inventory_items).uniq
   end
