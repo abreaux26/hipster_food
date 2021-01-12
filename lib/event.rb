@@ -36,8 +36,8 @@ class Event
   end
 
   def food_trucks_per_item
-     list_of_items.each_with_object({}) do |item, hash|
-       hash[item] = food_trucks_that_sell(item)
+     list_of_items.each_with_object({}) do |item, food_trucks_per_item|
+       food_trucks_per_item[item] = food_trucks_that_sell(item)
      end
   end
 
@@ -49,5 +49,24 @@ class Event
 
   def list_of_items
     @food_trucks.flat_map(&:inventory_items).uniq
+  end
+
+  def total_inventory
+    list_of_items.each_with_object({}) do |item, total_inventory_hash|
+      total_inventory_hash[item] = inventory(item)
+    end
+  end
+
+  def inventory(item)
+    {
+      quantity: quantity_per_item(item),
+      food_trucks: food_trucks_that_sell(item)
+    }
+  end
+
+  def quantity_per_item(item)
+    food_trucks_that_sell(item).sum do |food_truck|
+      food_truck.check_stock(item)
+    end
   end
 end
