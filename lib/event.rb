@@ -20,4 +20,12 @@ class Event
       food_truck.inventory_items.include? item
     end
   end
+
+  def sorted_item_list
+    item_names_per_food_truck.sort
+  end
+
+  def item_names_per_food_truck
+    @food_trucks.flat_map(&:sorted_inventory_items).uniq
+  end
 end

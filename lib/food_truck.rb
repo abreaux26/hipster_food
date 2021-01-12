@@ -25,4 +25,12 @@ class FoodTruck
       item.price * @inventory[item]
     end
   end
+
+  def sorted_inventory_items
+    inventory_items_names.sort
+  end
+
+  def inventory_items_names
+    inventory_items.map(&:name)
+  end
 end

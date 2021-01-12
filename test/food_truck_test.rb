@@ -6,7 +6,8 @@ require './lib/food_truck'
 class FoodTruckTest < Minitest::Test
   def setup
     @food_truck = FoodTruck.new('Rocky Mountain Pies')
-    @item1 = Item.new({name: 'Peach Pie (Slice)', price: "$3.75"})
+    @item1 = Item.new({name: 'Peach Pie (Slice)', price: '$3.75'})
+    @item2 = Item.new({name: 'Apple Pie (Slice)', price: '$2.50'})
   end
 
   def test_it_exists
@@ -57,5 +58,31 @@ class FoodTruckTest < Minitest::Test
     @food_truck.stock(@item1, 25)
 
     assert_equal 206.25, @food_truck.potential_revenue
+  end
+
+  def test_sorted_inventory_items
+    @food_truck.stock(@item1, 30)
+    @food_truck.stock(@item1, 25)
+    @food_truck.stock(@item2, 7)
+
+    expected = [
+      'Apple Pie (Slice)',
+      'Peach Pie (Slice)'
+    ]
+
+    assert_equal expected, @food_truck.sorted_inventory_items
+  end
+
+  def test_inventory_items_names
+    @food_truck.stock(@item1, 30)
+    @food_truck.stock(@item1, 25)
+    @food_truck.stock(@item2, 7)
+
+    expected = [
+      'Peach Pie (Slice)',
+      'Apple Pie (Slice)'
+    ]
+
+    assert_equal expected, @food_truck.inventory_items_names
   end
 end
