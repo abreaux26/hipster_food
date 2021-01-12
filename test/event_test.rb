@@ -23,6 +23,12 @@ class EventTest < Minitest::Test
     @food_truck3.stock(@item1, 65)
   end
 
+  def add_trucks_to_event
+    @event.add_food_truck(@food_truck1)
+    @event.add_food_truck(@food_truck2)
+    @event.add_food_truck(@food_truck3)
+  end
+
   def test_it_exists
     assert_instance_of Event, @event
   end
@@ -45,9 +51,7 @@ class EventTest < Minitest::Test
   end
 
   def test_food_trucks_that_sell
-    @event.add_food_truck(@food_truck1)
-    @event.add_food_truck(@food_truck2)
-    @event.add_food_truck(@food_truck3)
+    add_trucks_to_event
 
     expected = [@food_truck1, @food_truck3]
 
