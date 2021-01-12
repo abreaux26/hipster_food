@@ -28,4 +28,28 @@ class Event
   def item_names_per_food_truck
     @food_trucks.flat_map(&:sorted_inventory_items).uniq
   end
+
+  def overstocked_items
+    food_trucks_per_item.select do |item, food_trucks_array|
+      food_trucks_array.length > 1 && overstocked?(item, food_trucks_array)
+    end.keys
+  end
+
+  def food_trucks_per_item
+     list_of_items.each_with_object({}) do |item, hash|
+       hash[item] = food_trucks_that_sell(item)
+     end
+  end
+
+  def overstocked?(item, food_trucks_array)
+    food_trucks_array.any? do |food_truck|
+      food_truck.overstocked?(item)
+    end
+  end
+
+  private
+
+  def list_of_items
+    @food_trucks.flat_map(&:inventory_items).uniq
+  end
 end

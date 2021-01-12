@@ -22,7 +22,7 @@ class FoodTruck
 
   def potential_revenue
     inventory_items.sum do |item|
-      item.price * @inventory[item]
+      item.price * quantity(item)
     end
   end
 
@@ -32,5 +32,15 @@ class FoodTruck
 
   def inventory_items_names
     inventory_items.map(&:name)
+  end
+
+  def overstocked?(item)
+    quantity(item) > 50
+  end
+
+  private
+
+  def quantity(item)
+    @inventory[item]
   end
 end

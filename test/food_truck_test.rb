@@ -85,4 +85,11 @@ class FoodTruckTest < Minitest::Test
 
     assert_equal expected, @food_truck.inventory_items_names
   end
+
+  def test_overstocked
+    @food_truck.stock(@item1, 30)
+    @food_truck.stock(@item1, 25)
+
+    assert_equal true, @food_truck.overstocked?(@item1)
+  end
 end

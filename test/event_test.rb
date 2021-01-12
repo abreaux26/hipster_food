@@ -83,4 +83,29 @@ class EventTest < Minitest::Test
 
     assert_equal expected, @event.item_names_per_food_truck
   end
+
+  def test_overstocked_items
+    add_trucks_to_event
+
+    assert_equal [@item1], @event.overstocked_items
+  end
+
+  def test_food_trucks_per_item
+    add_trucks_to_event
+
+    expected = {
+      @item1 => [@food_truck1, @food_truck3],
+      @item2 => [@food_truck1],
+      @item3 => [@food_truck2],
+      @item4 => [@food_truck2]
+    }
+
+    assert_equal expected, @event.food_trucks_per_item
+  end
+
+  def test_overstocked
+    add_trucks_to_event
+
+    assert_equal true, @event.overstocked?(@item1, [@food_truck1, @food_truck3])
+  end
 end
